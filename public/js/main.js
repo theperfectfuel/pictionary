@@ -1,8 +1,28 @@
 var socket = io();
-var drawing;
 
 var pictionary = function() {
 	var canvas, context;
+	var drawing, guessBox;
+
+	var onKeyDown = function(event) {
+		if (event.keyCode != 13) {
+			return;
+		}
+
+		socket.emit('guess', guessBox.val());
+		//console.log(guessBox.val());
+		guessBox.val('');
+	};
+
+	var addGuess = function(guess) {
+		$('#guesses').html("<p>" + guess + "</p>");
+		console.log(guess);
+	};
+
+	guessBox = $('#guess input');
+	guessBox.on('keydown', onKeyDown);
+
+	socket.on('guess', addGuess);
 
 	var draw = function(position) {
 		context.beginPath();
@@ -19,12 +39,12 @@ var pictionary = function() {
 
 	canvas.on('mousedown', function() {
 		drawing = true;
-		console.log(drawing);
+		//console.log(drawing);
 	});
 
 	canvas.on('mouseup', function() {
 		drawing = false;
-		console.log(drawing);
+		//console.log(drawing);
 	});
 
 	canvas.on('mousemove', function(event) {
