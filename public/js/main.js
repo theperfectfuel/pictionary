@@ -1,5 +1,4 @@
 var socket = io();
-console.log(socket);
 
 var pictionary = function() {
 	var canvas, context;
@@ -23,9 +22,9 @@ var pictionary = function() {
 		draw(position);
 
 		socket.emit('draw', position);
+		socket.on('draw', draw);
 	});
 };
-
 
 $(document).ready(function() {
 	

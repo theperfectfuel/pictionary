@@ -10,9 +10,11 @@ var server = http.Server(app);
 var io = socket_io(server);
 
 io.on('connect', function(socket) {
+
 	socket.on('draw', function(position) {
-		console.log(position);
+		socket.broadcast.emit('draw', position);
 	});
+	
 });
 
 server.listen(8080);
