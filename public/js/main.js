@@ -1,3 +1,5 @@
+var socket = io();
+
 var pictionary = function() {
 	var canvas, context;
 
@@ -18,11 +20,14 @@ var pictionary = function() {
 			y: event.pageY - offset.top
 		};
 		draw(position);
+
+		socket.emit('draw', position);
+		socket.on('draw', draw);
 	});
 };
 
-
-
 $(document).ready(function() {
+	
 	pictionary();
+
 });
