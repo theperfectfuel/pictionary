@@ -8,5 +8,4 @@ app.use(express.static('public'));
 var server = http.Server(app);
 var io = socket_io(server);
 
-
 app.listen(8080);
