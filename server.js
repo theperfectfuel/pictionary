@@ -14,6 +14,10 @@ io.on('connect', function(socket) {
 	socket.on('draw', function(position) {
 		socket.broadcast.emit('draw', position);
 	});
+
+	socket.on('guess', function(guessBox) {
+		io.emit('guess', guessBox);
+	});
 	
 });
 
