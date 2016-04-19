@@ -33,6 +33,10 @@ io.on('connect', function(socket) {
 	socket.on('guess', function(guessBox) {
 		io.emit('guess', guessBox);
 	});
+
+	socket.on('solved', function(word) {
+		io.emit('solved', word);
+	});
 	
 });
 
