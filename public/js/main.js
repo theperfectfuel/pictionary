@@ -2,7 +2,21 @@ var socket = io();
 
 var pictionary = function() {
 	var canvas, context;
-	var drawing, guessBox;
+	var drawing, guessBox, drawer;
+
+	var setDrawer = function(user) {
+		var sockID = '/#' + socket.id;
+		console.log(user, sockID);
+		if (user == sockID) {
+			drawer = true;
+			console.log('drawer is: ', drawer);
+		}
+	};
+
+	// If user is first in they are the drawer
+
+	socket.on('setDrawer', setDrawer);
+
 
 	var onKeyDown = function(event) {
 		if (event.keyCode != 13) {
@@ -54,12 +68,12 @@ var pictionary = function() {
 			y: event.pageY - offset.top
 		};
 
-		if (drawing) {
+		if (drawing && drawer) {
 			draw(position);
 
 			socket.emit('draw', position);
-			socket.on('draw', draw);
 		}
+		socket.on('draw', draw);
 	});
 
 };
