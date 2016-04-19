@@ -21,9 +21,12 @@ io.on('connect', function(socket) {
 		console.log(socket.id, "disconnected from game.");
 		for (var i = 0; i < userList.length; i++) {
 			if (userList[i] == socket.id) {
-				console.log('remove user', userList[i]);
+				console.log('removing user', userList[i]);
+				userList.splice(i, 1);
+				console.log('removed user', userList);
 			}
 		}
+		io.emit('setDrawer', userList[0]);
 	});
 
 	socket.on('draw', function(position) {
